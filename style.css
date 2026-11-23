@@ -1,0 +1,115 @@
+* { margin:0; padding:0; box-sizing:border-box; }
+body {
+  font-family:Arial,sans-serif; min-height:100vh;
+  background:linear-gradient(135deg,#ffd6e7,#e5d9ff,#d8f0ff);
+  overflow-x:hidden;
+}
+.container { min-height:100vh; display:flex; justify-content:center; align-items:center; padding:25px; }
+.welcome-text { text-align:center; color:#d94f88; }
+.welcome-text h1 { font-size:30px; margin-bottom:15px; }
+.welcome-text p { color:#815b79; }
+.admin-icon {
+  position:fixed; top:15px; right:15px; z-index:10; width:45px; height:45px;
+  border-radius:50%; background:white; color:#d94f88; font-size:23px;
+  border:none; cursor:pointer; box-shadow:0 4px 15px #0002;
+}
+.modal {
+  position:fixed; inset:0; z-index:20; background:rgba(50,30,50,.4);
+  display:flex; justify-content:center; align-items:center; padding:15px; overflow-y:auto;
+}
+.hidden { display:none !important; }
+.modal-content {
+  background:white; width:100%; max-width:430px; padding:35px 25px;
+  border-radius:25px; text-align:center; box-shadow:0 15px 50px #0002;
+  animation:popup .4s ease; max-height:90vh; overflow-y:auto;
+}
+.emoji { font-size:55px; margin-bottom:15px; }
+h2 { color:#e45d95; margin-bottom:15px; }
+h1 { color:#df5790; margin-bottom:15px; }
+p { color:#777; line-height:1.6; margin-bottom:20px; }
+input,textarea,select {
+  width:100%; padding:13px; margin:8px 0 15px; border:2px solid #f6c4d9;
+  border-radius:12px; font-size:15px; outline:none; font-family:inherit;
+}
+input:focus,textarea:focus,select:focus { border-color:#e45d95; }
+textarea { resize:vertical; }
+label { display:block; text-align:left; color:#a34b75; font-weight:bold; margin-top:8px; }
+.main-btn,.secondary-btn {
+  width:100%; padding:14px; border:none; border-radius:12px; background:#ed75a7;
+  color:white; font-size:16px; font-weight:bold; cursor:pointer; margin-top:10px; transition:.2s;
+}
+.main-btn:hover { background:#d84f89; transform:translateY(-2px); }
+.secondary-btn { background:#999; }
+.answer-list { display:flex; flex-direction:column; gap:12px; }
+.answer-btn {
+  width:100%; padding:15px; border:2px solid #f3b8d1; background:#fff1f7;
+  color:#c64d80; font-size:16px; border-radius:14px; cursor:pointer; font-weight:bold; transition:.2s;
+}
+.answer-btn:hover { background:#fbd5e5; transform:scale(1.02); }
+.answer-btn:disabled { cursor:default; opacity:.75; }
+.error { color:red; font-size:13px; margin:5px 0; }
+.birthday-content { background:linear-gradient(135deg,#fff0f6,#fff,#f5eaff); }
+.admin-content { max-width:720px; text-align:left; }
+.admin-content > h2,.admin-content > p { text-align:center; }
+.shake { animation:shake .45s ease; }
+@keyframes popup { from {opacity:0;transform:scale(.7)} to {opacity:1;transform:scale(1)} }
+@keyframes shake { 0%,100%{transform:translateX(0)} 20%,60%{transform:translateX(-12px)} 40%,80%{transform:translateX(12px)} }
+@media(max-width:480px) { .welcome-text h1{font-size:23px} .modal-content{padding:28px 20px} }
+
+/* Giao diện game */
+.story-box {
+  width:min(90vw,750px); margin:auto; background:#fff0f6; border-radius:20px;
+  overflow:hidden; box-shadow:0 10px 40px #0004;
+}
+#storyBackground {
+  min-height:250px; background:linear-gradient(135deg,#ffb6d9,#c7b6ff);
+  display:flex; justify-content:center; align-items:center;
+}
+#storyCharacter { font-size:100px; animation:characterFloat 2s infinite ease-in-out; }
+@keyframes characterFloat { 50%{transform:translateY(-12px)} }
+.story-dialogue { padding:25px; background:#fff; }
+#storySpeaker { color:#e84393; margin-bottom:10px; }
+#storyText { min-height:60px; line-height:1.7; color:#333; white-space:pre-wrap; }
+#storyChoices button,#storyNext {
+  display:block; width:100%; margin-top:12px; padding:13px; border:none;
+  border-radius:12px; background:#ff75aa; color:white; cursor:pointer; font-size:15px;
+}
+#storyChoices button:hover,#storyNext:hover { background:#e84393; }
+#storyAdmin { display:block; padding:18px; margin:22px 0; background:#fff7fb; border:1px solid #f4c5da; border-radius:15px; }
+#storyAdmin input,#storyAdmin textarea { display:block; width:100%; padding:10px; margin:8px 0 12px; }
+#storyAdmin textarea { min-height:90px; }
+.story-item { padding:14px; margin:10px 0; border:1px solid #e8c6d7; border-radius:10px; background:white; }
+.story-item strong { color:#a83e70; }
+.story-item p { margin:6px 0; overflow-wrap:anywhere; }
+.story-item-actions { display:flex; gap:8px; }
+.story-item-actions button { flex:1; padding:9px; border:0; border-radius:8px; cursor:pointer; background:#f3d5e3; color:#8c315b; }
+.story-admin-actions { display:grid; grid-template-columns:1fr 1fr; gap:8px; }
+.story-admin-actions button { margin:0; }
+.admin-hint { font-size:14px; margin-bottom:12px; }
+.story-editor { margin-top:18px; padding:16px; border:1px dashed #df8fb3; border-radius:12px; background:white; }
+.story-editor h3,.choice-editor-heading h3 { color:#a83e70; margin-bottom:10px; }
+.ending-label { display:flex; align-items:center; gap:8px; }
+.ending-label input { width:auto; margin:0; }
+.choice-editor-heading { display:flex; align-items:center; justify-content:space-between; gap:10px; margin-top:15px; }
+.compact-btn { width:auto; padding:9px 12px; margin:0; font-size:13px; }
+.choice-row { padding:12px; margin:10px 0; border-radius:10px; background:#fff3f8; }
+.choice-row button { border:0; border-radius:8px; padding:8px 12px; cursor:pointer; background:#f3c6da; color:#7d3154; }
+.story-modal { z-index:30; }
+@media(max-width:520px) {
+  .story-admin-actions { grid-template-columns:1fr; }
+  .choice-editor-heading { align-items:flex-start; flex-direction:column; }
+  #storyBackground { min-height:190px; }
+  #storyCharacter { font-size:78px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  *,*::before,*::after { animation-duration:.01ms!important; transition-duration:.01ms!important; }
+}
+/* Nút điều khiển âm thanh */
+.sound-toggle {
+  position:fixed; top:15px; left:15px; z-index:40; padding:11px 15px;
+  border:1px solid #f3b8d1; border-radius:999px; background:#fff;
+  color:#bd4d7d; font-weight:bold; font-size:13px; cursor:pointer;
+  box-shadow:0 4px 15px #0002;
+}
+.sound-toggle:hover { background:#fff0f6; transform:translateY(-1px); }
+@media(max-width:480px) { .sound-toggle { top:12px; left:12px; padding:9px 11px; font-size:12px; } }

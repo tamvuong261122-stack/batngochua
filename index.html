@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Điều Bất Ngờ Dành Cho Bạn</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <button class="admin-icon" onclick="openAdminLogin()" aria-label="Mở quản trị">⚙</button>
+  <button class="sound-toggle" id="soundToggle" onclick="toggleAudio()" aria-label="Bật hoặc tắt âm thanh">🔊 Âm thanh: Bật</button>
+
+  <main class="container">
+    <div class="welcome-text">
+      <h1>✨ Một điều bất ngờ dành cho bạn ✨</h1>
+      <p>Hãy cùng khám phá nhé!</p>
+    </div>
+
+    <div class="modal" id="nameModal">
+      <div class="modal-content">
+        <div class="emoji">💌</div>
+        <h2>Xin chào!</h2>
+        <p>Vui lòng nhập đầy đủ họ và tên của bạn.</p>
+        <input type="text" id="fullName" placeholder="Ví dụ: Nguyễn Văn A" autocomplete="name">
+        <p class="error" id="nameError"></p>
+        <button class="main-btn" onclick="submitName()">Xác nhận ❤️</button>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="questionModal">
+      <div class="modal-content">
+        <div class="emoji">💖</div>
+        <h2 id="helloName">Xin chào!</h2>
+        <p id="questionText"></p>
+        <div class="answer-list" id="answerList"></div>
+        <p id="answerMessage"></p>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="birthdayModal">
+      <div class="modal-content birthday-content">
+        <div class="emoji">🎂</div>
+        <h2 id="birthdayName"></h2>
+        <p id="birthdayMessage"></p>
+        <button class="main-btn" onclick="startBirthdayStory()">Một số câu hỏi không thích em có thể bỏ qua</button>
+        <button class="secondary-btn" onclick="closeBirthday()">Đóng</button>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="storyModal">
+      <div class="story-box">
+        <div id="storyBackground">
+          <div id="storyCharacter">🧸</div>
+        </div>
+        <div class="story-dialogue">
+          <h2 id="storySpeaker">Nhân vật</h2>
+          <p id="storyText"></p>
+          <div id="storyChoices" class="story-choices"></div>
+          <button id="storyNext" class="main-btn hidden" onclick="nextStory()">Tiếp tục ➜</button>
+          <button id="storyClose" class="secondary-btn hidden" onclick="closeStory()">Kết thúc</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="noticeModal">
+      <div class="modal-content">
+        <div class="emoji">💗</div>
+        <h2>Thông báo</h2>
+        <p id="noticeText"></p>
+        <button class="main-btn" onclick="closeNotice()">Đã hiểu</button>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="adminLoginModal">
+      <div class="modal-content">
+        <h2>🔐 Admin Login</h2>
+        <p>Nhập mật khẩu quản trị.</p>
+        <input type="password" id="adminPassword" placeholder="Mật khẩu Admin">
+        <p class="error" id="adminError"></p>
+        <button class="main-btn" onclick="loginAdmin()">Đăng nhập</button>
+        <button class="secondary-btn" onclick="closeAdminLogin()">Đóng</button>
+      </div>
+    </div>
+
+    <div class="modal hidden" id="adminModal">
+      <div class="modal-content admin-content">
+        <h2>⚙️ QUẢN TRỊ WEBSITE</h2>
+        <p>Chỉnh sửa nội dung câu hỏi, lời chúc và cốt truyện sinh nhật.</p>
+
+        <label for="adminQuestion">Câu hỏi:</label>
+        <textarea id="adminQuestion" rows="3"></textarea>
+        <label for="answer1">Đáp án 1:</label>
+        <input id="answer1" type="text">
+        <label for="answer2">Đáp án 2:</label>
+        <input id="answer2" type="text">
+        <label for="correctAnswer">Đáp án đúng:</label>
+        <select id="correctAnswer">
+          <option value="0">Đáp án 1</option>
+          <option value="1">Đáp án 2</option>
+        </select>
+        <label for="adminBirthday">Lời chúc sinh nhật:</label>
+        <textarea id="adminBirthday" rows="4"></textarea>
+        <label for="newPassword">Đổi mật khẩu Admin:</label>
+        <input id="newPassword" type="password" placeholder="Để trống nếu không đổi">
+        <button class="main-btn" onclick="saveAdminSettings()">Lưu cài đặt chung</button>
+
+        <section id="storyAdmin">
+          <h2>🎮 Quản lý cốt truyện</h2>
+          <p class="admin-hint">Tạo các đoạn hội thoại và nối lựa chọn đến đoạn tiếp theo. Tất cả người có sinh nhật dùng chung cốt truyện này.</p>
+          <div class="story-admin-actions">
+            <button class="main-btn" onclick="newStoryNode()">＋ Thêm hộp thoại</button>
+            <button class="secondary-btn" onclick="previewStory()">Xem thử cốt truyện</button>
+          </div>
+          <div id="storyNodeList"></div>
+
+          <div id="storyEditor" class="story-editor hidden">
+            <h3 id="storyEditorTitle">Thêm hộp thoại</h3>
+            <label for="nodeId">Mã hộp thoại (không dấu, không khoảng trắng):</label>
+            <input id="nodeId" type="text" placeholder="vi-du: gap-go">
+            <label for="nodeSpeaker">Tên người nói:</label>
+            <input id="nodeSpeaker" type="text" placeholder="Ví dụ: Người kể chuyện">
+            <label for="nodeCharacter">Biểu tượng nhân vật (emoji):</label>
+            <input id="nodeCharacter" type="text" placeholder="Ví dụ: 🧸">
+            <label for="nodeText">Nội dung lời thoại:</label>
+            <textarea id="nodeText" rows="4"></textarea>
+            <label class="ending-label"><input type="checkbox" id="nodeEnding"> Đây là hộp thoại kết thúc</label>
+            <div class="choice-editor-heading">
+              <h3>Các lựa chọn và nhánh tiếp theo</h3>
+              <button type="button" class="secondary-btn compact-btn" onclick="addChoiceEditor()">＋ Thêm lựa chọn</button>
+            </div>
+            <div id="choiceEditorList"></div>
+            <button class="main-btn" onclick="saveStoryNode()">Lưu hộp thoại</button>
+            <button class="secondary-btn" onclick="cancelStoryEdit()">Hủy</button>
+          </div>
+        </section>
+
+        <button class="secondary-btn" onclick="closeAdmin()">Đóng trang Admin</button>
+      </div>
+    </div>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
